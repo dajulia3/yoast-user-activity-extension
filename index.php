@@ -19,13 +19,13 @@ if($DEVELOPMENT_ENV){
 add_action('wp_head', 'daj_gax_add_event_tracking_js');
 
 function daj_gax_add_event_tracking_js(){
-	echo '<script type="text/javascript">';
-	echo 'var _gaq = _gaq || [];"'; //ensure the gaq is there, or make it
-	
 	if($_GET['preview']==true) //Don't track previews
 	{
 		return;
 	}
+	
+	echo '<script type="text/javascript">';
+	echo 'var _gaq = _gaq || [];"'; //ensure the gaq is there, or make it
 	if($_GET['p']) //viewing a post
 	{
 		$post_name = get_the_title($_GET['p']);
