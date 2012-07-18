@@ -25,17 +25,17 @@ function daj_gax_add_event_tracking_js(){
 	}
 	
 	echo '<script type="text/javascript">';
-	echo 'var _gaq = _gaq || [];"'; //ensure the gaq is there, or make it
+	echo "\nvar _gaq = _gaq || [];\n"; //ensure the gaq is there, or make it
 	if($_GET['p']) //viewing a post
 	{
 		$post_name = get_the_title($_GET['p']);
-		echo "_gaq.push(['_trackEvent', 'Posts', 'View', ${$post_name}]);\n";
+		echo "_gaq.push(['_trackEvent', 'Posts', 'View', '${post_name}']);\n";
 		
 	}
 	else if($_GET['page_id']) //viewing a page
 	{
 		$page_name = get_the_title($_GET['page_id']);
-		echo "_gaq.push(['_trackEvent', 'Pages', 'View', ${$page_name}]);\n";
+		echo "_gaq.push(['_trackEvent', 'Pages', 'View', '${page_name}']);\n";
 	}
 	
 	echo '</script>';
