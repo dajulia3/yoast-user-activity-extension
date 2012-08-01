@@ -15,7 +15,7 @@ function daj_gax_output_dev_js(){
 	global $daj_gax_DEVELOPMENT_ENV;
 	if($daj_gax_DEVELOPMENT_ENV){
 		//echo '<script type="text/javascript">';
-		echo "_gaq.push(['_setDomainName', 'none']);";
+		echo "_gaq.push(['_setDomainName', 'none']);\n";
 		//echo '</script>';
 	}
 }
@@ -24,13 +24,20 @@ function daj_gax_output_dev_js(){
 add_action('wp_head', daj_gax_setup);
 
 function daj_gax_setup(){
-		
+	$ua_code = 'UA-33319912-1'; //Replace with a code stored in settings
+	echo"
+		<script type='text/javascript'>
+		var _gaq = _gaq || []; /*ensure the gaq is there, or make it*/
+		";
+	echo "_gaq.push(['_setAccount', '${ua_code}']);\n";
+	
+	daj_gax_output_dev_js();
+	echo "</script>";
 }
 
 add_action('wp_footer', daj_gax_footer);
 
 function daj_gax_footer(){
-	$ua_code = 'UA-33319912-1';
 	if($_GET['preview']==true) //Don't track previews
 	{
 		return;
@@ -53,15 +60,10 @@ function daj_gax_footer(){
 		}
 		//echo "*****STARRRRRRRTTTTT*****\n";
 		echo '<script type="text/javascript">';
-		echo "\nvar _gaq = _gaq || [];\n"; //ensure the gaq is there, or make it
 		//set the visitor level user_name custom var and track the page view
 		
-		daj_gax_output_dev_js();
 		echo "
-		_gaq.push(
-				['_setAccount', ${ua_code}],
-				['_trackPageview', '${post_name}']
-		);\n";
+		_gaq.push(['_trackPageview', '${post_name}']);\n";
 		
 		echo "(function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
